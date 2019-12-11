@@ -12,7 +12,7 @@ def calculate_output(data, noun, verb):
     data[1], data[2] = noun, verb
     return computer(data)
 
-def find_pairs(mem):
+def find_inputs(mem):
     for noun in range(0, 100):
         for verb in range(0, 100):
             if calculate_output(mem.copy(), noun, verb) == 19690720:
@@ -26,4 +26,4 @@ def load_data(filename):
 
 filename = "day2_data.txt"
 print("Task 1:", computer(load_data(filename)))
-print("Task 2:", find_pairs(load_data(filename)))
+print("Task 2:", find_inputs(load_data(filename)))
