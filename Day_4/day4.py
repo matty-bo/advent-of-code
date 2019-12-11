@@ -1,26 +1,12 @@
-# range input 246540-787419
-left = 246540
-right = 787419
-
-
-def answer():
-    print("Task 1:", count_passwords(restrictions))
-    print("Task 2:", count_passwords(improved_restrictions))
-
-
-def count_passwords(criteria):
+def count_passwords(restrictions):
     count = 0
     for i in range(int(left), int(right)+1):
-        if criteria(str(i)):
+        if restrictions(str(i)):
             count += 1
     return count
 
-
-# TASK_1:
 def restrictions(number):
-    if len(number) != 6:
-        return 0
-
+    assert len(number) == 6
     outcome = 0
     for i in range(len(number)-1):
         if number[i] == number[i+1]:
@@ -29,11 +15,8 @@ def restrictions(number):
             return 0
     return outcome
 
-
-# TASK_2
 def improved_restrictions(number):
-    if len(number) != 6:
-        return 0
+    assert len(number) == 6
     count_group = 1
     outcome = 0
     for i in range(len(number) - 1):
@@ -49,5 +32,7 @@ def improved_restrictions(number):
         outcome = 1
     return outcome
 
-
-answer()
+left = 246540
+right = 787419
+print("Task 1:", count_passwords(restrictions))
+print("Task 2:", count_passwords(improved_restrictions))
