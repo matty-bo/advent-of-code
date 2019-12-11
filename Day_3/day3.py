@@ -25,7 +25,6 @@ def create_wire(data):
         wire.append(create_segment(wire[i-1].x2, wire[i-1].y2, data[i]))
     return wire
 
-# orientation - returns:
 def orientation(seg):
     if seg.y1 == seg.y2:
         return 0  # horizontal
@@ -41,42 +40,39 @@ def adjust_segment(seg):
         seg.x1, seg.x2 = seg.x2, seg.x1
     return seg
 
-# creates cross_points list for task 2
-def append_cross_point(seg1, seg2, cross_points):
+def get_cross_point(seg1, seg2):
     # seg1 needs to be horizontal, seg2 needs to be vertical
     if orientation(seg1) == 1 and orientation(seg2) == 0:
         seg1, seg2 = seg2, seg1
     # adjusting segment to check conditions
-    adjust_segment(seg1)
-    adjust_segment(seg2)
+    adjust_segment(seg1), adjust_segment(seg2)
     if (seg1.x1 <= seg2.x1 <= seg1.x2) and (seg2.y1 <= seg1.y1 <= seg2.y2):
         if seg2.x1 != 0 and seg1.y1 != 0:
-            cross_points.append(str(seg2.x1) + "," + str(seg1.y1))  # creates list of cross points needed for task 2
+            return [seg2.x1, seg1.y1]
+    return None
 
-def create_cross_list(wire1, wire2, cross_points):
-    output_list = []
+def create_cross_list(wire1, wire2):
+    cross_points = []
     for i in wire1:
         for j in wire2:
-            append_cross_point(i, j, cross_points)
-    for point in cross_points:
-        output_list.append(list(map(int, point.split(sep=","))))
-    return output_list
+            point = get_cross_point(i, j)
+            if point:
+                cross_points.append(point)
+    return cross_points
 
-def manhattan_distance(wire1, wire2, cross_points):
+def manhattan_distance(cross_points):
     minn = -1
     for point in cross_points:
         distance = int(math.fabs(point[0]) + math.fabs(point[1]))
-        if 0 < distance < minn:
-            minn = distance
-        if minn == -1:
+        if 0 < distance < minn or minn == -1:
             minn = distance
     return minn
 
 #TASK 2 FUNCTIONS
-def segment_length(x1,y1,x2,y2):
+def segment_length(x1, y1, x2, y2):
     return int(math.sqrt((x2-x1)**2+(y2-y1)**2))
 
-def cross_distance(wire, xi, yi):
+def point_distance(wire, xi, yi):
     total = 0
     for seg in wire:
         if seg.y1 == yi == seg.y2:
@@ -85,7 +81,7 @@ def cross_distance(wire, xi, yi):
                 return total
         elif seg.y1 == seg.y2:
             total += int(math.fabs(seg.x2 - seg.x1))
-        if seg.x1 == xi == seg.x2:
+        if  seg.x1 == xi == seg.x2:
             if seg.y1 <= yi <= seg.y2 or seg.y2 <= yi <= seg.y1:
                 total += segment_length(xi, yi, seg.x1, seg.y1)
                 return total
@@ -95,13 +91,10 @@ def cross_distance(wire, xi, yi):
 
 def closest_cross_sum(wire1, wire2, cross_points):
     minn = -1
-    d1, d2 = 0, 0
     for point in cross_points:
-        d1 = cross_distance(wire1, int(point[0]), int(point[1]))
-        d2 = cross_distance(wire2, int(point[0]), int(point[1]))
-        if d1+d2 < minn:
-            minn = d1+d2
-        if minn == -1:
+        d1 = point_distance(wire1, point[0], point[1])
+        d2 = point_distance(wire2, point[0], point[1])
+        if d1+d2 < minn or minn == -1:
             minn = d1+d2
     return minn
 
@@ -110,8 +103,6 @@ with open(filename) as file:
     data1, data2 = file.readline().split(','), file.readline().split(',')
 wire1, wire2 = create_wire(data1), create_wire(data2)
 wire3, wire4 = create_wire(data1), create_wire(data2)
-
-cross_points = []
-cross_points = create_cross_list(wire1, wire2, cross_points)
-print("Task 1:", manhattan_distance(wire1, wire2, cross_points))
+cross_points = create_cross_list(wire1, wire2)
+print("Task 1:", manhattan_distance(cross_points))
 print("Task 2:", closest_cross_sum(wire3, wire4, cross_points))
