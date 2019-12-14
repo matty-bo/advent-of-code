@@ -21,7 +21,7 @@ def computer(memory, inputs, ip):
             inputs.pop(0)
             ip += 2
         elif op_code == 4:  # OUTPUTS
-            output = memory[ga(memory,modes,ip,1)]
+            output = memory[ga(memory, modes, ip, 1)]
             ip += 2
             return output, ip
         elif op_code == 5:
@@ -60,23 +60,24 @@ def loop_max_thruster(data):
     perms = list(itertools.permutations(range(5, 10)))
     max_thruster = 0
     for perm in perms:
+        programs = [data for _ in range(5)]
         ips = [0 for _ in range(5)]
         outs = [0 for _ in range(5)]
         inputs = [[perm[i]] for i in range(5)]
         inputs[0].append(0)
-        halted = False
-        while not halted:
+        stop = False
+        while not stop:
             for i in range(5):
-                output, next_ip = computer(data, inputs[i], ips[i])
-                if output is None:
-                    if outs[-1] > max_thruster:
-                        max_thruster = outs[-1]
-                    halted = True
-                    break
-                ips[i] = next_ip
+                output, next_ip = computer(programs[i], inputs[i], ips[i])
                 if output is not None:
                     outs[i] = output
-                inputs[(i + 1) % len(inputs)].append(output)
+                else:
+                    stop = True
+                    break
+                ips[i] = next_ip
+                inputs[(i + 1) % len(inputs)].append(outs[i])
+        if outs[-1] > max_thruster:
+            max_thruster = outs[-1]
     return max_thruster
 
 filename = "day7_data.txt"
