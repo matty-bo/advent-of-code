@@ -23,59 +23,47 @@ for mp in p:
     ps[mp[0], mp[1]] = angles
 
 maxx = max(len(ps[line]) for line in ps)
-
 station = None
 for line in ps:
     if len(ps[line]) == maxx:
         station = line
 print("Task 1:", maxx)
-print("Station:",station)
-
+print("Station:", station)
 tab = []
 for i in range(0, len(p)):
     distance = abs(station[0] - p[i][0]) + abs(station[1] - p[i][1])
     a = math.atan2(station[1] - p[i][1], station[0] - p[i][0])
     if distance != 0:
         tab.append([p[i], distance, round(a, 3)])
-
-laser_tab = []
+q1_laser = []
+q2, q3, q4 = [], [], []
 for line in tab:
     if line[0][0] >= station[0] and line[0][1] <= station[1]:
-        laser_tab.append([line[1], line[2]])
-new2 = []
-for line in tab:
+        q1_laser.append([line[1], line[2]])
     if line[0][0] >= station[0] and line[0][1] > station[1]:
-        new2.append([line[1], line[2]])
-new3 = []
-for line in tab:
+        q2.append([line[1], line[2]])
     if line[0][0] < station[0] and line[0][1] >= station[1]:
-        new3.append([line[1], line[2]])
-new4 = []
-for line in tab:
+        q3.append([line[1], line[2]])
     if line[0][0] < station[0] and line[0][1] < station[1]:
-        new4.append([line[1], line[2]])
-
-laser_tab.sort(key=lambda laser_tab: (laser_tab[1], laser_tab[0]))
-new2.sort(key=lambda new2: (new2[1], new2[0]))
-new3.sort(key=lambda new3: (new3[1], new3[0]))
-new4.sort(key=lambda new4: (new4[1], new4[0]))
-laser_tab.extend(new2)
-laser_tab.extend(new3)
-laser_tab.extend(new4)
-
+        q4.append([line[1], line[2]])
+q1_laser.sort(key=lambda laser_tab: (laser_tab[1], laser_tab[0]))
+q2.sort(key=lambda q2: (q2[1], q2[0]))
+q3.sort(key=lambda q3: (q3[1], q3[0]))
+q4.sort(key=lambda q4: (q4[1], q4[0]))
+q1_laser.extend(q2)
+q1_laser.extend(q3)
+q1_laser.extend(q4)
 indexes = set()
-for i in range(len(laser_tab)):
-    if i < len(laser_tab) - 1:
-        while laser_tab[i][1] == laser_tab[i + 1][1]:
+for i in range(len(q1_laser)):
+    if i < len(q1_laser) - 1:
+        while q1_laser[i][1] == q1_laser[i + 1][1]:
             i += 1
     indexes.add(i+1)
-
 que = []
 beg = 0
 for i in indexes:
-    que.append(laser_tab[beg:i])
+    que.append(q1_laser[beg:i])
     beg = i
-
 j = 0
 count = 0
 dist_slope = None
