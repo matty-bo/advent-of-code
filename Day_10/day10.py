@@ -66,19 +66,16 @@ for i in indexes:
     beg = i
 j = 0
 count = 0
-dist_slope = None
 destroy = 200
-while count != destroy:
-    if count == destroy - 1:
-        dist_slope = que[j].copy()
+while count < destroy:
     if que[j]:
+        if count == destroy - 1:
+            dist_slope = que[j][0].copy()
         que[j].pop(0)
         count += 1
     j += 1
     if j >= len(que):
         j = 0
-dist_slope = dist_slope[0]
-ans2 = None
 for p in tab:
     if dist_slope[0] == p[1] and dist_slope[1] == p[2]:
         ans2 = p[0]
