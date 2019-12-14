@@ -55,7 +55,12 @@ def print_decoded_image(layers, width, height):
         image.append(get_pixel_color(pixel))
     image = part_rows_cols(image, width)
     for row in image:
-        print(' '.join(row))
+        for i in row:
+            if i =='1':
+                print('#', end=' ')
+            else:
+                print(' ', end=' ')
+        print()
 
 width = 25
 height = 6
