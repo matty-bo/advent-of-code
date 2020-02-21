@@ -74,7 +74,7 @@ def scaffold_points(grid):
 
 def ans1(points):
     align_sum = 0
-    for p in intersections:
+    for p in points:
         align_sum += p[0] * p[1]
     return align_sum
 
