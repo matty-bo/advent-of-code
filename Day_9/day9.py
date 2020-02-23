@@ -2,10 +2,10 @@ from itertools import permutations
 
 
 def distance(way):
-    dist = 0
+    dist_sum = 0
     for i in range(len(way)-1):
-        dist += int(data.get((way[i], way[i+1]), None))
-    return dist
+        dist_sum += int(data.get((way[i], way[i+1]), None))
+    return dist_sum
 
 
 filename = 'day9_data.txt'
