@@ -13,6 +13,7 @@ def new_seq(seq):
         new.append(p)
     return ''.join(new)
 
+
 seq = '1113122113'
 for i in range(50):
     seq = new_seq(seq)
