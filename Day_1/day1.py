@@ -10,7 +10,7 @@ def binary_search(array, el, start, end):
         return binary_search(array, el, mid + 1, end)
 
 
-filename = 'input1'
+filename = 'input1.txt'
 with open(filename) as file:
     data = sorted(list(map(lambda x: int(x.strip()), file.readlines())))
 year = 2020
@@ -21,8 +21,8 @@ for i in range(len(data)):
     second_idx = binary_search(data, second, 0, len(data) - 1)
     if second_idx not in [-1, i]:
         numbers = (first, second)
-ans = numbers[0] * numbers[1]
-print('Answer 1:', ans)
+ans1 = numbers[0] * numbers[1]
+print('Answer 1:', ans1)
 
 numbers2 = (-1, -1, -1)
 for i in range(len(data)):
