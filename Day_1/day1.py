@@ -12,7 +12,7 @@ def binary_search(array, el, start, end):
 
 filename = 'input1.txt'
 with open(filename) as file:
-    data = sorted(list(map(lambda x: int(x.strip()), file.readlines())))
+    data = sorted(list(map(int, file.readlines())))
 year = 2020
 numbers = (-1, -1)
 for i in range(len(data)):

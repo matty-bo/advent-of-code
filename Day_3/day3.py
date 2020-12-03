@@ -12,7 +12,7 @@ def count_trees(array, right_nr, down_nr):
 
 filename = 'input3.txt'
 with open(filename) as file:
-    data = list(map(lambda x: x.rstrip(), file.readlines()))
+    data = list(map(str.rstrip, file.readlines()))
 
 ans1 = count_trees(data, 3, 1)
 print('Answer 1:', ans1)
