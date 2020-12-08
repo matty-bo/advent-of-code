@@ -24,7 +24,6 @@ for p in passports:
         fields.remove('cid')
     valid = sorted(fields) == req_fields
     ans1 += valid
-    valid2 = True
     if valid:
         fields_match = [re.fullmatch(regex_patterns[field], p[field]) is not None for field in fields]
         ans2 += all(fields_match)
